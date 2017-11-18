@@ -1,11 +1,26 @@
+/*==============Conjunto Simples==================
+===============LISTA SIMPLESMENTE ENCADEADA======
+	Inicializar_conjunto(D)
+	Inserir(C,e)
+	Remover(C,e)
+	Pertence(C)
+	Vazio(C)
+	terminar_conjunto(C)
+	*/
 #include <iostream>
-
 using namespace std;
-int main()
-{ short n = 0;
-	while(1){
-		n+= 10000;
-		cout << n << " ";
-	}
-	return 0;
+
+template <typename T>
+struct Noh{
+	T e;
+	Noh<T> *prox;
+};
+
+template <typename T>
+struct ConjuntoDin{
+	Noh<T> *prim;	
+};
+
+
+int main(){ 
 }
