@@ -32,13 +32,35 @@ int bal (Noh* p) {
 	return (altura(p->dir) - altura(p->esq));
 }
 
-Noh* direita(Noh* p){
+Noh* rotacaoDireita(DicAVL &D,Noh* p){ // para desbalanceamento em sub-árvore esquerda
 	Noh* aux = p->esq;
 	p->esq = aux->dir;
 	aux->pai = p->pai;
+	if(p->pai != NULL){
+		p->pai->esq = aux;
+	}
 	p->pai = aux;
 	aux->dir = p;
+	if(p == D.raiz){
+		D.raiz = D.raiz->pai;
+	}
 	return p;
+}
+
+Noh* rotacaoEsquerda(DicAVL &D, Noh* p){
+	Noh* aux = p->dir;
+	p->dir = aux->esq;
+	aux->pai = p->pai;
+	if(p->pai != NULL){
+		p->pai->dir = aux;
+	}
+	p->pai = aux;
+	aux->esq = p;
+	if(p == D.raiz){
+		D.raiz = D.raiz->pai;
+	}
+	return p;
+
 }
 Noh* inserir (DicAVL &D, TC c, TV v){
 	Noh* n = new (nothrow) Noh; // o novo nó sempre é uma folha
@@ -78,15 +100,21 @@ Noh* inserir (DicAVL &D, TC c, TV v){
 	while(p != NULL){
 		if(bal(p) == -2){
 			if(c < p->esq->chave){
-				p = direita(p);
+				p = rotacaoDireita(D,p);
+			}else{
+				//rotação dupla
+			}
+		}else if(bal(p) == 2){
+			if(c > p->dir->chave){
+				p = rotacaoEsquerda(D,p);
 			}
 		}
 		p->h = maior(altura(p->esq),altura(p->dir)) + 1;
 		p = p->pai;
 	}
-	if(D.raiz->pai != NULL){
+	/*if(D.raiz->pai != NULL){
 		D.raiz = D.raiz->pai;
-	}
+	}*/
 	return n;
 } // Retorna um ponteiro para o novo n´o, ou nulo se erro de aloca¸c~ao
 /*Noh* procurar (DicAVL &D, TC c); // Retorna um ponteiro para o n´o da
@@ -99,15 +127,21 @@ int main()
 {	
 	DicAVL D;
 	inicializar(D);
-	inserir(D,5,5);
-	inserir(D,4,4);
-	inserir(D,2,2);
 	inserir(D,1,1);
 	inserir(D,0,0);
-	Noh* p = D.raiz;
-	cout << D.raiz->valor << endl;
-	cout << D.raiz->esq->valor << endl;
-	cout << D.raiz->esq->esq->valor << endl;
-	cout << D.raiz->dir->valor << endl;
-	return 0;
+	inserir(D,4,4);
+	inserir(D,-1,-1);
+	inserir(D,5,5);
+	inserir(D,7,7);
+	cout << D.raiz->valor << "  " << D.raiz->h << endl;
+	cout << D.raiz->dir->valor << "  " << D.raiz->dir->h << endl;
+	cout << D.raiz->dir->dir->valor <<  "  " << D.raiz->dir->dir->h << endl;
+	cout << D.raiz->dir->esq->valor <<  "  " << D.raiz->dir->esq->h << endl;
+	/*cout << D.raiz->valor << " ALTURA: " << D.raiz->h << endl;
+	cout << D.raiz->esq->valor << " ALTURA: " << D.raiz->esq->h << endl;
+	cout << D.raiz->esq->esq->valor << " ALTURA: " << D.raiz->esq->esq->h << endl;
+	cout << D.raiz->dir->valor << " ALTURA: " << D.raiz->dir->h <<  endl;
+	cout << D.raiz->dir->esq->valor << "ALTURA: " << D.raiz->dir->esq->h << endl;
+	cout << D.raiz->dir->dir->valor << "ALTURA: " << D.raiz->dir->dir->h << endl;*/
+		return 0;
 }
