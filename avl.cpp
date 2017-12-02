@@ -102,7 +102,7 @@ Noh* inserir (DicAVL &D, TC c, TV v){
 			if(c < p->esq->chave){
 				p = rotacaoDireita(D,p);
 			}else{
-				//rotação dupla
+				p = rotacaoEsquerda(D,p->esq);//rotação dupla FAZER UMA ROTAÇÃO ESQUERDA NO P->ESQ
 			}
 		}else if(bal(p) == 2){
 			if(c > p->dir->chave){
@@ -127,13 +127,17 @@ int main()
 {	
 	DicAVL D;
 	inicializar(D);
-	inserir(D,1,1);
+	inserir(D,5,5);
+	inserir(D,3,3);
+	inserir(D,4,4);
+	cout << D.raiz->esq->dir->valor << endl;
+	/*inserir(D,1,1);
 	inserir(D,0,0);
 	inserir(D,4,4);
 	inserir(D,-1,-1);
 	inserir(D,5,5);
-	inserir(D,7,7);
-	cout << D.raiz->valor << "  " << D.raiz->h << endl;
+	inserir(D,7,7);/*
+	/*cout << D.raiz->valor << "  " << D.raiz->h << endl;
 	cout << D.raiz->dir->valor << "  " << D.raiz->dir->h << endl;
 	cout << D.raiz->dir->dir->valor <<  "  " << D.raiz->dir->dir->h << endl;
 	cout << D.raiz->dir->esq->valor <<  "  " << D.raiz->dir->esq->h << endl;
