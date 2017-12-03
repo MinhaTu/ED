@@ -90,4 +90,9 @@ bool terminar_conjunto(ConjuntoDin<T> &C){
 
 }
 int main(){ 
+	ConjuntoDin<int> C;
+	inicializar_conjunto(C);
+	inserir(C,3);
+	inserir(C,4);
+	
 }
